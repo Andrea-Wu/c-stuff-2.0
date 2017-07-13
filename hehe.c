@@ -59,7 +59,7 @@ void main() {
 			(*temp3).next = create(nameArr[0], NULL); 
 			temp3 = (*temp3).next;              
 
-		}else if(nameArr[2] == NULL){//there are 2 names
+		}else if(nameArr[2] == NULL){
 			(*temp3).next = create(nameArr[1], NULL);  
 			(*temp2).next = create(nameArr[0], NULL);
 
@@ -95,7 +95,7 @@ void main() {
 	fclose(fp); 
 
 
-	//this is going to be super ratchet: creating a node called "name", where next is head of sorted, and name is the type of residence
+	//can only send 1 argument into the thread. so i am sending the location info as a LL node
 	node* args1Pt = create("village", head1);
 	node* args2Pt = create("town", head2);
 	node* args3Pt = create("city", head3);
@@ -109,7 +109,7 @@ void main() {
 	pthread_create(&thread2, NULL, (void*)&sort, (void *)args2Pt);
 //	pthread_create(&thread1, NULL, (void*)&sort, (void *)args1Pt);
 
-//	void** idk1; //this variable is called "idk" because idk why it works now as opposed to the 30 variations I tried previously:wq
+//	void** idk1; //this variable is called "idk" because idk why this is/isn't working
 	void** idk2;	
 //	void** idk3;
 	
