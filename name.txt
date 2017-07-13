@@ -1,0 +1,7 @@
+Village              Town                City
+Andrea             Sherwin              Terry              
+Adam               Sidney               Taniya
+Arora             Samantha              Tory
+                   Shannon               Tenzin
+                                        Thomas
+
