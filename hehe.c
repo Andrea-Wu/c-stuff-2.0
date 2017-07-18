@@ -15,6 +15,15 @@ node* split(node* head);
 node* merge(node* head1, node* head2);
 void** sort(void* args);
 
+//global varbs
+node* args1Pt;
+node* args2Pt;
+node* args3Pt;
+
+void** idk1;
+void** idk2;
+void** idk3;
+
 void main() {
 	FILE* fp = fopen("name.txt", "r"); //open filestream
 	if (fp == NULL) {
@@ -96,9 +105,9 @@ void main() {
 
 
 	//this is going to be super ratchet: creating a node called "name", where next is head of sorted, and name is the type of residence
-	node* args1Pt = create("village", head1);
-	node* args2Pt = create("town", head2);
-	node* args3Pt = create("city", head3);
+	args1Pt = create("village", head1);
+	args2Pt = create("town", head2);
+	args3Pt = create("city", head3);
 
 
 //	pthread_t thread1;
@@ -109,9 +118,6 @@ void main() {
 	pthread_create(&thread2, NULL, (void*)&sort, (void *)args2Pt);
 //	pthread_create(&thread1, NULL, (void*)&sort, (void *)args1Pt);
 
-//	void** idk1; //this variable is called "idk" because idk why it works now as opposed to the 30 variations I tried previously:wq
-	void** idk2;	
-//	void** idk3;
 	
 //	pthread_join(thread3, idk3);
 	pthread_join(thread2, idk2);
