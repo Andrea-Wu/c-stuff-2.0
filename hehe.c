@@ -26,8 +26,13 @@ node* idk1;
 node* idk2;
 node* idk3;
 
-void main() {//command line arguments int argc, char* argv[] later
-	FILE* fp = fopen("name.txt", "r"); //open filestream
+void main(int argc, char* argv[]) {
+	if(argc != 3){
+		printf("try again");
+		return;
+	}
+	
+	FILE* fp = fopen(argv[1], "r"); //open filestream
 	if (fp == NULL) {
 		printf("file not found");
 	}
@@ -129,13 +134,10 @@ void main() {//command line arguments int argc, char* argv[] later
 	node* h2 = (node*)idk2;
 	node* h1 = (node*)idk1;
 
-	printLL(h3); //city
-	printLL(h2); //town
-	printLL(h1); //village
-
 	//now we gotta write to file
-	FILE* newFile = fopen("new.txt", "a");
-	
+	FILE* newFile = fopen(argv[2], "w");
+	writeToFile(newFile, h1, h2, h3);
+	fclose(newFile);
 	
 }
 
@@ -179,6 +181,8 @@ void writeToFile(FILE* stream, node* village, node* town, node* city){
 		fputs(" ", stream);
 	}
 
+	fputs("\n\n", stream);
+
 	while(village != NULL || town != NULL || city != NULL){
 		
 		if(village == NULL){
@@ -201,6 +205,8 @@ void writeToFile(FILE* stream, node* village, node* town, node* city){
 
 		writeSingleName(stream, *city);
 		city = (*city).next;
+
+		fputs("\n", stream);
 	}
 		                              
 }
@@ -209,11 +215,12 @@ void writeSingleName(FILE* stream, node location){//does not iterate
 	int numSpaces;
 	char nameAgain[50];
 	char* name;
+	int i;
 
 	name = location.name;
 	strcpy(nameAgain, name);//idk if necessary
 	fputs(nameAgain, stream);
-	numspaces = 30 - strlen(nameAgain);
+	numSpaces = 30 - strlen(nameAgain);
 	for(i = 0; i < numSpaces; i++){
 		fputs(" ", stream);
 	}
@@ -224,7 +231,6 @@ void* sort(void* args){
 	char* type = (*arguments).name;
 	node* head = (node*)malloc(sizeof(node*));
 	head = (*arguments).next;
-	printLL(head);
 	head = mergeSort(head);
 	printf("I am the %s thread, and I have finished sorting!\n", type);
 	return (void*)head;
