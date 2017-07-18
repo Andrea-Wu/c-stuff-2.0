@@ -15,6 +15,7 @@ node* split(node* head);
 node* merge(node* head1, node* head2);
 void* sort(void* args);
 void writeToFile(FILE* stream, node* village, node* town, node* city);
+void writeSingleName(FILE* stream, node location);
 
 //global varbs
 node* args1Pt;
@@ -133,7 +134,7 @@ void main() {//command line arguments int argc, char* argv[] later
 	printLL(h1); //village
 
 	//now we gotta write to file
-	FILE* newFile = fopen("new.txt", w);
+	FILE* newFile = fopen("new.txt", "a");
 	
 	
 }
@@ -165,7 +166,57 @@ void writeToFile(FILE* stream, node* village, node* town, node* city){
 	fputs("village", stream);
 	int i;
 	for(i = 0; i < 23; i++){
+		fputs(" ", stream);
+	}
+
+	fputs("town", stream);
+	for(i = 0; i <26; i++){
+		fputs(" ", stream);
+	}
+
+	fputs("city", stream);
+	for(i = 0; i < 26; i++){
+		fputs(" ", stream);
+	}
+
+	while(village != NULL || town != NULL || city != NULL){
+		
+		if(village == NULL){
+			for(i = 0; i < 30; i++){
+				fputs(" ", stream);
+			} 
+		}else{
+			writeSingleName(stream, *village);
+			village = (*village).next;
+		}
+
+		if(town == NULL){
+			for(i = 0; i < 30; i++){
+				fputs(" ", stream);
+			}
+		}else{
+			writeSingleName(stream, *town);
+			town = (*town).next;
+		}
+
+		writeSingleName(stream, *city);
+		city = (*city).next;
+	}
 		                              
+}
+
+void writeSingleName(FILE* stream, node location){//does not iterate
+	int numSpaces;
+	char nameAgain[50];
+	char* name;
+
+	name = location.name;
+	strcpy(nameAgain, name);//idk if necessary
+	fputs(nameAgain, stream);
+	numspaces = 30 - strlen(nameAgain);
+	for(i = 0; i < numSpaces; i++){
+		fputs(" ", stream);
+	}
 }
 
 void* sort(void* args){
