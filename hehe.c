@@ -14,6 +14,7 @@ node* mergeSort(node* head);
 node* split(node* head);
 node* merge(node* head1, node* head2);
 void* sort(void* args);
+void writeToFile(FILE* stream, node* village, node* town, node* city);
 
 //global varbs
 node* args1Pt;
@@ -24,7 +25,7 @@ node* idk1;
 node* idk2;
 node* idk3;
 
-void main() {
+void main() {//command line arguments int argc, char* argv[] later
 	FILE* fp = fopen("name.txt", "r"); //open filestream
 	if (fp == NULL) {
 		printf("file not found");
@@ -132,6 +133,9 @@ void main() {
 	printLL(h1); //village
 
 	//now we gotta write to file
+	FILE* newFile = fopen("new.txt", w);
+	
+	
 }
 
 
@@ -155,6 +159,13 @@ void printLL(node* headPt){
 	}
 	printf("\n");
 
+}
+
+void writeToFile(FILE* stream, node* village, node* town, node* city){
+	fputs("village", stream);
+	int i;
+	for(i = 0; i < 23; i++){
+		                              
 }
 
 void* sort(void* args){
