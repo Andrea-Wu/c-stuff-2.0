@@ -13,16 +13,16 @@ void printLL(node* headPt);
 node* mergeSort(node* head);
 node* split(node* head);
 node* merge(node* head1, node* head2);
-void** sort(void* args);
+void* sort(void* args);
 
 //global varbs
 node* args1Pt;
 node* args2Pt;
 node* args3Pt;
 
-void** idk1;
-void** idk2;
-void** idk3;
+node* idk1;
+node* idk2;
+node* idk3;
 
 void main() {
 	FILE* fp = fopen("name.txt", "r"); //open filestream
@@ -110,26 +110,28 @@ void main() {
 	args3Pt = create("city", head3);
 
 
-//	pthread_t thread1;
+	pthread_t thread1;
 	pthread_t thread2;
-//	pthread_t thread3;
+	pthread_t thread3;
 	
-//	pthread_create(&thread3, NULL, (void*)&sort, (void *)args3Pt);
+	pthread_create(&thread3, NULL, (void*)&sort, (void *)args3Pt);
 	pthread_create(&thread2, NULL, (void*)&sort, (void *)args2Pt);
-//	pthread_create(&thread1, NULL, (void*)&sort, (void *)args1Pt);
+	pthread_create(&thread1, NULL, (void*)&sort, (void *)args1Pt);
 
 	
-//	pthread_join(thread3, idk3);
-	pthread_join(thread2, idk2);
-//	pthread_join(thread1, idk1); //the pthread_join() is creating an error and idk why. It might be because of the pointer conver
+	pthread_join(thread3,(void**)&idk3);
+	pthread_join(thread2,(void**)&idk2);
+	pthread_join(thread1,(void**)&idk1);
 
-//	node** h3 = (node**)idk3;
-	node** h2 = (node**)idk2;
-//	node** h1 = (node**)idk1;
+	node* h3 = (node*)idk3;
+	node* h2 = (node*)idk2;
+	node* h1 = (node*)idk1;
 
-//	printLL(*h3);printf("why");
-	printLL(*h2);printf("dis");
-//	printLL(*h1);printf("hapn");
+	printLL(h3); //city
+	printLL(h2); //town
+	printLL(h1); //village
+
+	//now we gotta write to file
 }
 
 
@@ -147,24 +149,23 @@ node* create(char* name, node* next) {
 void printLL(node* headPt){
 	printf("\n");
 	while(headPt != NULL){
-		node head = *headPt;
-		printf("%s!\n", head.name);
-		headPt = head.next;
+		node myHead = *headPt;
+		printf("%s!\n",myHead.name);
+		headPt = myHead.next;
 	}
 	printf("\n");
 
 }
 
-void** sort(void* args){
+void* sort(void* args){
 	node* arguments = args;
 	char* type = (*arguments).name;
-	node* head = (*arguments).next;
+	node* head = (node*)malloc(sizeof(node*));
+	head = (*arguments).next;
 	printLL(head);
 	head = mergeSort(head);
 	printf("I am the %s thread, and I have finished sorting!\n", type);
-	printf("the following list is err check for %s\n", type);
-	printLL(head);
-	return (void**)head;
+	return (void*)head;
 }
 
 
